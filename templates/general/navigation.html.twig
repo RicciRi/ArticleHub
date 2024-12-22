@@ -1,8 +1,11 @@
 
 {% if app.user %}
 <nav class="d-flex-center p-3">
-    <a class="m-1" href="{{ path('app_home') }}">Home</a>
-    <a class="m-1" href="{{ path('app_home') }}">Home</a>
+    <div class="p-5 pt-0 pb-0">{{ app.user.userName }}</div>
+
+    <a class="m-1" href="{{ path('app_home') }}">Home</a> |
+    <a class="m-1" href="{{ path('app_article') }}">Article</a>
+
 
 
     <a class="ml-auto d-flex" href="{{ path('app_logout') }}">Logout</a>
