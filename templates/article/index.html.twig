@@ -4,40 +4,46 @@
 
 {% block body %}
 
-<div class="container">
-    <div class="row p-5">
-        <div class="col-6 d-flex-center mr-ml-auto">
-            <h1>Articles</h1>
-        </div>
-        <div class="col-12 pt-5">
-            <div class="article-container">
-                <div class="mb-5">
-                    <a href="{{ path('app_article_new') }}">
-                        Add new Articles
-                    </a>
-                </div>
-                {% for article in articles %}
-                    <div class="article--section">
-                        <div class="article--section-header">
-                            <div class="article--section-header-title">
-                                {{ article.title }} -
-                            </div>
-                            <div class="article--section-header-author">
-                                {{ article.author.userName }}
-                            </div>
-                        </div>
-
-                        <div class="article--section-content">
-                            {{ article.content }}
-                        </div>
-                        <div class="article--section-createdAt">
-                            {{ article.createdAt|date('Y-m-d H:i') }}
-                        </div>
+    <div class="container">
+        <div class="row p-5">
+            <div class="col-6 d-flex-center mr-ml-auto">
+                <h1>Articles</h1>
+            </div>
+            <div class="col-12 pt-5">
+                <div class="article-container">
+                    <div class="mb-5">
+                        <a href="{{ path('app_article_new') }}">
+                            Add new Articles
+                        </a>
                     </div>
-                {% endfor %}
+                    {% for article in articles %}
+                        <div class="article--section">
+                            <div class="article--section-header">
+                                <div class="article--section-header-title">
+                                    {{ article.title }} -
+                                </div>
+                                <div class="article--section-header-author">
+                                    {{ article.author.userName }}
+                                </div>
+                            </div>
+                            {% if( is_granted('ROLE_ADMIN') or app.user.id == article.author.id)  %}
+                            <div class="text-end">
+                                <a href="{{ path('app_article_delete', {'id':article.id}) }}">Delete</a>
+                            </div>
+                            {% endif %}
+
+                            <div class="article--section-content">
+                                {{ article.content }}
+                            </div>
+                            <div class="article--section-createdAt-open">
+                                <a href="{{ path('app_article_show', {'id': article.id}) }}" class="fs-4">Open</a>
+                                <span>{{ article.createdAt|date('Y-m-d H:i') }}</span>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
             </div>
         </div>
-    </div>
 
-</div>
+    </div>
 {% endblock %}

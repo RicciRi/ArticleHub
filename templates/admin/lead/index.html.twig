@@ -1,0 +1,87 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %} ADM Leads {% endblock %}
+
+
+
+{% block body %}
+
+    <div>
+        <h1>LEADS:</h1>
+
+        {% if users is not empty %}
+            <h3>Users with articles:</h3>
+            <ul>
+                {% for u in users %}
+                    <li>{{ u.userName }} | {{ u.articles|length }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+
+        {% if usersWithNoArticle is not empty %}
+            <h3>Users with no article:</h3>
+            <ul>
+                {% for u in usersWithNoArticle %}
+                    <li>{{ u.userName }} | {{ u.articles|length }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+
+        {% if usersTopByCountOfArticles is not empty %}
+            <h3>Top by count of articles:</h3>
+            <ul>
+                {% for u in usersTopByCountOfArticles %}
+                    <li>{{ u.userName }} | Count of articles : {{ u.articles|length }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+
+
+        {% if usersTopByCountOfComments is not empty %}
+            <h3>Who wrote more comments:</h3>
+            <ul>
+                {% for u in usersTopByCountOfComments %}
+                    <li>{{ u.userName }} | Count of comments: {{ u.comments|length }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+
+        {% if articlesTopByCountOfComments is not empty %}
+            <h3>Top articles by comments:</h3>
+            <ul>
+                {% for a in articlesTopByCountOfComments %}
+                    <li>{{ a.title }} | Count of comments: {{ a.comments|length }} | Owner: {{ a.author.userName }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+
+        {% if articleWithComments is not empty %}
+            <h3>Users who have articles with more than 3 comments </h3>
+            <ul>
+                {% for a in articleWithComments %}
+                    <li>{{ a.title }} | Comments: {{ a.comments|length }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+
+        {% if userWithComments is not empty %}
+            <h3>Users and their last comment</h3>
+            <ul>
+                {% for array in userWithComments %}
+                    <li>{{ array.user.userName }} : {{ array.latestComment.content}} </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+
+    </div>
+
+
+{% endblock %}

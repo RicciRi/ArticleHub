@@ -40,4 +40,29 @@ class ArticleRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
+
+    public function getArticlesByCountOfComments(): array
+    {
+        return $this->createQueryBuilder('a')
+                    ->join('a.comments', 'c')
+                    ->groupBy('a.id')
+                    ->having('COUNT(c.id) > 0')
+                    ->orderBy('COUNT(c.id)', 'desc')
+                    ->getQuery()
+                    ->getResult();
+    }
+
+    public function getArticlesWithComments($int = 0) :array
+    {
+        return $this->createQueryBuilder('a')
+            ->join('a.comments', 'c')
+            ->groupBy('a.id')
+            ->having('COUNT(c.id) >= :int')
+            ->setParameter('int', $int)
+            ->orderBy('COUNT(c.id)', 'desc')
+            ->getQuery()
+            ->getResult();
+
+    }
 }

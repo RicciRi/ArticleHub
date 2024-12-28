@@ -57,4 +57,59 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
+    public function findUserWithCountOfArticles(): array
+    {
+        return $this->createQueryBuilder('u')
+                    ->innerJoin('u.articles', 'a')
+                    ->groupBy('u.id')
+                    ->having('COUNT(a.id) > 0')
+                    ->getQuery()
+                    ->getResult();
+
+    }
+
+
+    public function findUserWithNoArticle(): array
+    {
+        return $this->createQueryBuilder('u')
+            ->leftJoin('u.articles', 'a')
+            ->groupBy('u.id')
+            ->having('COUNT(a.id) = 0')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getUserByCountOfArticles() : array
+    {
+        return $this->createQueryBuilder('u')
+            ->join('u.articles', 'a')
+            ->groupBy('u.id')
+            ->having('COUNT(a.id) > 0')
+            ->orderBy('COUNT(a.id)', 'desc')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    public function getUsersByCountOfComments() : array
+    {
+        return $this->createQueryBuilder('u')
+            ->join('u.comments', 'c')
+            ->groupBy('u.id')
+            ->having('COUNT(c.id) > 0')
+            ->orderBy('COUNT(c.id)', 'desc')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getUserAndTheirLastComment() : array
+    {
+        return $this->createQueryBuilder('u')
+            ->join('u.comments', 'c')
+            ->groupBy('c.id')
+            ->orderBy('c.createdAt', 'asc')
+            ->getQuery()
+            ->getResult();
+    }
 }

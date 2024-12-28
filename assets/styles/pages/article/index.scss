@@ -29,8 +29,10 @@
     .article--section-content {
       margin: 20px 0;
     }
-    .article--section-createdAt {
-      text-align: end;
+    .article--section-createdAt-open {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
   }
 }

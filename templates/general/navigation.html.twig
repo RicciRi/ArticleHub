@@ -6,6 +6,14 @@
     <a class="m-1" href="{{ path('app_home') }}">Home</a> |
     <a class="m-1" href="{{ path('app_article') }}">Article</a>
 
+    {% if(is_granted('ROLE_ADMIN')) %}
+        |
+        <a class="m-1" href="{{ path('app_admin_lead') }}">Leads</a>
+
+
+    {% endif %}
+
+
 
 
     <a class="ml-auto d-flex" href="{{ path('app_logout') }}">Logout</a>
